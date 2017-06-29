@@ -1,5 +1,6 @@
 'use strict';
 var pa11y = require('pa11y');
+var fs = require("fs");
 var test = pa11y({
 	log: {
 		debug: console.log.bind(console),
@@ -33,5 +34,9 @@ test.run('http://phgma.dev/v2/overview/overview', function(error, results){
 	if (error) {
 		return console.error(error.message);
 	}
-	console.log(html);
+
+	fs.writeFile('pa11y_report.html', html, function(err) {
+		if (err) throw err;
+		console.log('Saved!');
+	});
 });
