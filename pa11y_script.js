@@ -2,16 +2,17 @@
 var pa11y = require('pa11y');
 var fs = require("fs");
 var test = pa11y({
+	allowedStandards: ['WCAG2A'],
+	standard: 'WCAG2A',
 	log: {
 		debug: console.log.bind(console),
 		error: console.error.bind(console),
 		info: console.log.bind(console)
 	},
-	ignore: [
+    ignore: [
         'notice',
         'warning'
     ],
-    
 	actions: [
 		'set field #user to console',
 		'set field #password to PeteWin5',
@@ -35,7 +36,12 @@ test.run('http://phgma.dev/v2/overview/overview', function(error, results){
 		return console.error(error.message);
 	}
 
-	fs.writeFile('pa11y_report.html', html, function(err) {
+	var date = new Date();
+	var day = date.getDate();
+	var month = date.getMonth();
+	var year = date.getFullYear();
+
+	fs.writeFile('reports/' + day + '-' + month + '-' + year + '-' + 'report.html', html, function(err) {
 		if (err) throw err;
 		console.log('Saved!');
 	});
